@@ -49,6 +49,42 @@ const base64 = file => {
   });
 };
 
+// Take a binary buffer of a file and return a binary buffer
+const convert = file => {
+  return new Promise((resolve, reject) => {
+    // // get the extension of the chosen file
+    // let extension = path.extname(file) || "";
+    // extension = extension.split(".").pop();
+    //
+    // // supported files for now are ['jpg', 'jpeg', 'png']
+    // if (!SUPPORTED_MIMES[extension]) {
+    //   return reject(ERROR_EXT);
+    // }
+
+    return jimp
+      .read(file.buffer)
+      .then(image => image.resize(10, jimp.AUTO))
+      .then(image =>
+        image.getBuffer(SUPPORTED_MIMES[image.getExtension()], (err, data) => {
+          if (err) {
+            return reject(err);
+          }
+
+          if (data) {
+            // valid image Base64 string, ready to go as src or CSS background
+            return resolve(data);
+          }
+          return reject(
+            new Error('Unhandled promise rejection in base64 promise')
+          );
+        })
+      )
+      .catch(err => {
+        return reject(err);
+      });
+  });
+};
+
 const palette = file => {
   return new Promise((resolve, reject) => {
     // vibrant library was about 10-15% slower than

@@ -35,6 +35,20 @@ lqip.base64(file).then(res => {
 
 ```
 
+Generating raw image data from an image
+
+```js
+const fs = require('fs');
+const lqip = require('lqip');
+
+const file = Buffer.from(`./dest/to/file/zouhir-riding-a-bike.jpg`);
+
+lqip.convert(file).then(res => {
+  fs.writeFileSync('./dest/to/file/zouhir-riding-a-bike.lqip.jpg', res);
+});
+
+```
+
 Generating colour palette from an image:
 
 ```js
