@@ -64,8 +64,6 @@ const convert = file => {
     var buffer;
     var size = 10;
 
-    console.log(jimp.AUTO)
-
     if (file instanceof Buffer) {
       buffer = file;
     } else {
