@@ -61,9 +61,21 @@ const convert = file => {
     //   return reject(ERROR_EXT);
     // }
 
+    var buffer;
+    var size = 10;
+
+    console.log(jimp.AUTO)
+
+    if (file instanceof Buffer) {
+      buffer = file;
+    } else {
+      buffer = file.buffer;
+      size = file.size;
+    }
+
     return jimp
-      .read(file.buffer)
-      .then(image => image.resize(10, jimp.AUTO))
+      .read(buffer)
+      .then(image => image.resize(size, jimp.AUTO))
       .then(image =>
         image.getBuffer(SUPPORTED_MIMES[image.getExtension()], (err, data) => {
           if (err) {
