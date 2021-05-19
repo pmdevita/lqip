@@ -114,5 +114,6 @@ process.on("unhandledRejection", up => {
 
 module.exports = {
   base64,
+  convert,
   palette
 };
